@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+<head>
+	<title>Weather API</title>
+	<meta charset="utf-8"/>
+  <link href="https://fonts.googleapis.com/css?family=Modak&display=swap" rel="stylesheet">
+
+</head>
+<style media="screen">
+
+  .text {
+    padding-left: 10%;
+    padding-right: 10%;
+		font-family: sans-serif;
+
+  }
+  #data {
+    padding-top: 10%;
+    padding-bottom: 10%;
+    font-family: 'Modak';
+    font-weight: 10;
+    font-size: 30pt;
+    text-align: center;
+
+  }
+  #data2 {
+    padding-top: 5%;
+    padding-bottom: 20%;
+    font-family: 'Modak';
+    font-weight: 10;
+    font-size: 30pt;
+    text-align: center;
+  }
+  #scroll {
+    padding-bottom: 20%;
+  }
+  .title {
+    text-align: center;
+    font-family: 'Modak';
+    font-size: 50pt;
+    font-weight: 10;
+  }
+	.link {
+		color: red;
+	}
+	.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 20%;
+}
+</style>
+	<body onload="getJoke()">
+
+    <h1 class="title">Joke Generator</h1>
+    <div class = "text">I found this api at a website called "sv443.net/jokeapi".
+      This is part of a collaborative comminuty of reddit users who frequently
+       submit jokes. They also offered a "dark" catergory, many of those made me
+       laugh but I didn't include them becasue they were (really) not
+       appropriate. It was on <span class="link"> <a href="https://github.com/public-apis/public-apis">Github's
+			 List of Free APIs</a></span>. <br> I chose to disply only the setup
+			 and delivery of the jokes. As stated before I did not give the user the
+		 	 option to display dark humor because I was morally obligated. <br><br>
+		   This api would be useful on a personal blog or for a company like adult swim,
+		 	 a company that sells "humor" as their product.</div>
+
+		<div id="data" class ="text"></div>
+    <p id="scroll" class="text">scroll down for answer...</p>
+    <div id="data2" class = "text"></div>
+		<img src="https://ih0.redbubble.net/image.1078256808.9259/flat,550x550,075,f.u1.jpg" class="center"><br><br><br><br>
+
+
+
+	<script>
+	      function getJoke() {
+
+	          request = new XMLHttpRequest();
+	          console.log("1 - request object created");
+	          var site = "https://sv443.net/jokeapi/category/miscellaneous/?blacklistFlags=nsfw";
+	          request.open("GET", site, true);
+
+	          console.log("2 - opened request file");
+
+	          request.onreadystatechange = function() {
+	              console.log("3 - readystatechange event fired.");
+
+	              if (request.readyState == 4 && request.status == 200) {
+
+	                  result = request.responseText;
+	                  var joke = JSON.parse(result);
+
+	                  document.getElementById("data").innerHTML = joke["setup"];
+                    document.getElementById("data2").innerHTML = joke["delivery"];
+
+	              } else if (request.readyState == 4 && request.status != 200) {
+	                  document.getElementById("data").innerHTML = "Something went wrong!"+ '<br>' + "Please try reloading the page";
+	              } else {
+	              document.getElementById("data").innerHTML = "Loading..."
+                }
+
+	          }
+	          request.send();
+	          console.log("4 - Request sent");
+	      }
+
+	</script>
+
+
+
+	</body>
+</html>
